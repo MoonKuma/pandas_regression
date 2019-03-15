@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
-file_name = 'data/data_formal/env_zoneid_data.txt'
+file_name = 'data/data_formal/orig/txt_file/chongqing_1.txt'
 
 # read
 full_data = pd.read_csv(file_name, delimiter='\t', header=0)  # no index here, index_col=0 if index required
