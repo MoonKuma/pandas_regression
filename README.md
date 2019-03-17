@@ -12,7 +12,7 @@
   - ```python
     from sklearn.linear_model import LinearRegression
     
-    model = LogisticRegression()
+    model = LinearRegression()
     ```
 
 - Ridged regression 
