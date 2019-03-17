@@ -3,4 +3,11 @@
 # @File  : Controller.py
 # @Author: MoonKuma
 # @Date  : 2019/3/12
-# @Desc  : 
+# @Desc  :
+
+from pandas_method import compute_questionnaire,read_questionnaire
+import pandas as pd
+
+read_questionnaire.read_questionnaire()
+compute_questionnaire.main_decoder()
+#
