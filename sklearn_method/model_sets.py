@@ -7,6 +7,11 @@
 
 from sklearn_method.sklearn_models import *
 
+def model_set_simple():
+    model_dict = dict()
+    model_dict['linear'] = get_linear()
+    return model_dict
+
 def model_set_1():
     model_dict = dict()
     model_dict['linear'] = get_linear()
