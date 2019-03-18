@@ -30,6 +30,11 @@ sub_col_rest = pick_columns(columns=columns, word_starts_with=starts)
 
 starts = 'pain_erp_peak'
 ends = 'N90'
-fig = box_plot_selected(df=df, starts=starts,ends=ends)
-file_save_path = 'data/data_formal/'
-fig.savefig(file_name)
+
+
+def plot_starts_ends(df, starts, ends, if_save=True):
+    fig = box_plot_selected(df=df, starts=starts,ends=ends)
+    file_save_path = 'data/data_formal/'
+    file_save_name = file_save_path + starts + '_' + ends + ',jpg'
+    if if_save:
+        fig.savefig(file_save_name)
