@@ -21,4 +21,5 @@ def model_set_1():
     model_dict['random_forest'] = get_random_forest(max_depth=100, n_estimators=10000)
     model_dict['gradient_trees'] = get_gradient_trees(max_depth=100, n_estimators=10000)
     model_dict['neural_network'] = get_neural_network(hidden_layer_sizes=(50,25,10))
+    return model_dict
 
