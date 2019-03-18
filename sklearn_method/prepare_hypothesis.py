@@ -6,15 +6,20 @@
 # @Desc   : test hypothesis in chongqing
 
 import pandas as pd
-from sklearn_method.train_and_test import train_and_test
 from pandas_method.pandas_method import pick_columns
 from sklearn.datasets import make_regression
 
 def prepare_hypothesis(file_name):
+    """
+    Prepare data frame, feature columns and target columns for future test
+    This method also create a faked feature and target sets for testing whether the model worked
+    :param file_name: file where data saved
+    :return: df, columns_dict_x, columns_dict_y
+    """
     # data
-    file_name = 'data/data_formal/orig/txt_file/merged_data/result_final.txt'
+    # file_name = 'data/data_formal/orig/txt_file/merged_data/result_final.txt'
     df = pd.read_csv(filepath_or_buffer=file_name, sep=',', header=0, index_col=0)
-    columns = df.columns.values
+    # columns = df.columns.values
     # col_T = columns.reshape(columns.shape[0],1) # this is for easier reading
     indexs = df.index.values
     # fake data
@@ -31,6 +36,9 @@ def prepare_hypothesis(file_name):
     columns = df.columns.values
     # columns
     columns_dict_y = dict()
+    """
+    The following is all hypothesises,  columns_dict_y contains targets, and columns_dict_x contains features combination
+    """
     # target
     columns_dict_y['age'] = pick_columns(columns=columns, word_starts_with='age_response')
     columns_dict_y['race_identity'] = pick_columns(columns=columns, word_starts_with='RESULT_r1')
@@ -73,3 +81,5 @@ def prepare_hypothesis(file_name):
     columns_dict_x['rest_orig'] = pick_columns(columns=columns, word_starts_with='rest_orig_')
     # testing features (for testing whether the method is useful)
     columns_dict_x['test_X'] = pick_columns(columns=columns, word_starts_with='test_X_')
+
+    return df, columns_dict_x, columns_dict_y
