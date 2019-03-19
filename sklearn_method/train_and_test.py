@@ -37,9 +37,12 @@ def train_and_test(df, x_columns, y_column, test_size = 0.1, test_times=10, mode
         model_dict = model_method() # generate a new model each time
         for model_name in model_dict.keys():
             model = model_dict[model_name]
-            train_score, test_score = train_test(sample=sample, model=model, model_name=model_name)
-            result_test_dict[model_name] = result_test_dict.setdefault(model_name, 0) + test_score
-            result_train_dict[model_name] = result_train_dict.setdefault(model_name, 0) + train_score
+            try:
+                train_score, test_score = train_test(sample=sample, model=model, model_name=model_name)
+                result_test_dict[model_name] = result_test_dict.setdefault(model_name, 0) + test_score
+                result_train_dict[model_name] = result_train_dict.setdefault(model_name, 0) + train_score
+            except:
+                print('[ERROR]',model_name)
     for model_name in model_dict.keys():
         result_test_dict[model_name] = result_test_dict.setdefault(model_name, 0)/test_times
         result_train_dict[model_name] = result_train_dict.setdefault(model_name, 0)/test_times
