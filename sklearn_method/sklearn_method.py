@@ -37,10 +37,10 @@ def train_test(sample, model, model_name):
     msg = 'Start training model [' + str(model_name) + ']'
     print(msg)
     [X_train, X_test, y_train, y_test] = sample
-    model.fit(X_train, y_train.ravel())
+    model.fit(X_train, (y_train*1.0).ravel())
     time_cost = time.time() - start
-    score_train = model.score(X_train, y_train.ravel())
-    score_test = model.score(X_test, y_test.ravel())
+    score_train = model.score(X_train, (y_train*1.0).ravel())
+    score_test = model.score(X_test, (y_test*1.0).ravel())
     msg = '[RESULT] Training model ['+ str(model_name) + '], with time cost [' + str(time_cost) + '], train score [' + str(score_train) +'], test score[' + str(score_test) + ']'
     print(msg)
     return score_train, score_test
