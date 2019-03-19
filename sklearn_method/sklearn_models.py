@@ -32,7 +32,7 @@ def get_bayesian():
 
 
 # kernel method models
-def get_svm(kernel='rbf',C=1.0,gamma='auto_deprecated'):
+def get_svm(kernel='rbf',C=1.0,gamma='auto'):
     # kernel type: 'rbf', 'linear', 'poly'
     return svm.SVR(kernel=kernel, C=C, gamma=gamma)
 

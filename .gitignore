@@ -2,7 +2,7 @@
 *.gz
 /.idea/
 /data/data_formal/
-/data/result/model_result/
+/data/result/
 
 
 
