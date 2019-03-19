@@ -17,4 +17,4 @@ from sklearn_method.test_hypothesis import test_all_hypothesis,test_all_models
 #
 
 # final_result_test, final_result_train = test_all_hypothesis()
-final_result_test, final_result_train = test_all_hypothesis(model_method=model_set_2)
+final_result_test, final_result_train = test_all_hypothesis(model_method=model_set_3)
