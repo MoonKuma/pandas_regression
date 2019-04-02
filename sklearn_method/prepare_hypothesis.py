@@ -6,7 +6,7 @@
 # @Desc   : test hypothesis in chongqing
 
 import pandas as pd
-from pandas_method.pandas_method import pick_columns,is_column_contains
+from pandas_method.pandas_method import pick_columns
 from sklearn.datasets import make_regression
 
 def prepare_hypothesis(file_name):
@@ -168,3 +168,7 @@ def prepare_hypothesis_on_erp(file_name):
     columns_dict_x['test_X'] = pick_columns(columns=columns, word_starts_with='test_X_')
 
     return df, columns_dict_x, columns_dict_y
+
+def show_columns(column_dict):
+    for key in column_dict.keys():
+        print(key,':',len(column_dict[key]))
