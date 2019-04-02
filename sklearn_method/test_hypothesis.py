@@ -5,7 +5,7 @@
 # @Date    : 2019/3/19
 # @Desc   :  test hypothesis
 
-from sklearn_method.prepare_hypothesis import prepare_hypothesis
+from sklearn_method.prepare_hypothesis import prepare_hypothesis,prepare_hypothesis_on_erp
 from sklearn_method.train_and_test import train_and_test
 from sklearn_method.model_sets import *
 import json
@@ -16,8 +16,8 @@ file_name = 'data/data_formal/result_final.txt'
 save_path = 'data/result/model_result'
 save_path_final = 'data/result/model_result/total_result'
 
-df, columns_dict_x, columns_dict_y = prepare_hypothesis(file_name=file_name)
-
+# df, columns_dict_x, columns_dict_y = prepare_hypothesis(file_name=file_name)
+df, columns_dict_x, columns_dict_y = prepare_hypothesis_on_erp(file_name=file_name)
 # test one model and all hypothesis
 
 def test_all_hypothesis(model_method=model_set_1):
@@ -37,6 +37,7 @@ def test_all_hypothesis(model_method=model_set_1):
                 _save_result_half_path(save_path, hypothesis_name, result_test_dict, result_train_dict)
             except:
                 print('[ERROR] In testing', hypothesis_name)
+                print(traceback.format_exc())
     _save_result_half_path(save_path_final, 'FINAL', final_result_test, final_result_train)
     return final_result_test,final_result_train
 

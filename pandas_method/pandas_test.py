@@ -37,5 +37,18 @@ norm_ndarray = scaler.fit(norm_data).transform(norm_data)
 norm_df = pd.DataFrame(norm_ndarray, columns=norm_col, index=index)
 merge_df = pd.merge(norm_df, pd.DataFrame(full_data, columns=column_stay), left_index=True, right_index=True)
 
+# read .mat
 
 
+import h5py
+import numpy as np
+file_mat = 'data/data_formal/Cluster_whole.mat'
+file_m = h5py.File(file_mat, 'r')
+print(list(file_m.keys()))
+value = file_m['Cluster_whole']
+np_array = np.array(value)
+print(np_array.shape)
+
+np_array_select = np_array[401:801,0,:,1]
+np_array_select = np_array_select.T
+np_array_select.shape

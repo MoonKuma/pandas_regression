@@ -6,7 +6,7 @@
 # @Desc   : test hypothesis in chongqing
 
 import pandas as pd
-from pandas_method.pandas_method import pick_columns
+from pandas_method.pandas_method import pick_columns,is_column_contains
 from sklearn.datasets import make_regression
 
 def prepare_hypothesis(file_name):
@@ -79,6 +79,91 @@ def prepare_hypothesis(file_name):
     # rest
     columns_dict_x['rest_norm'] = pick_columns(columns=columns, word_starts_with='rest_norm_')
     columns_dict_x['rest_orig'] = pick_columns(columns=columns, word_starts_with='rest_orig_')
+    # testing features (for testing whether the method is useful)
+    columns_dict_x['test_X'] = pick_columns(columns=columns, word_starts_with='test_X_')
+
+    return df, columns_dict_x, columns_dict_y
+
+
+def prepare_hypothesis_on_erp(file_name):
+    """
+        Prepare data frame, feature columns and target columns for future test
+        This method also create a faked feature and target sets for testing whether the model worked
+        current hypothesis is for testing resting states on erp components
+        :param file_name: file where data saved
+        :return: df, columns_dict_x, columns_dict_y
+        """
+    # data
+    # file_name = 'data/data_formal/result_final.txt'
+    df = pd.read_csv(filepath_or_buffer=file_name, sep=',', header=0, index_col=0)
+    # columns = df.columns.values
+    # col_T = columns.reshape(columns.shape[0],1) # this is for easier reading
+    indexs = df.index.values
+    # fake data
+    X, y = make_regression(n_features=50, n_samples=df.shape[0], n_informative=25, bias=0.1, noise=0.2)
+    X_col = list()
+    for i in range(0, X.shape[1]):
+        col_name = 'test_X_' + str(i)
+        X_col.append(col_name)
+    Y_col = ['test_Y']
+    df_testx = pd.DataFrame(X, columns=X_col, index=indexs)
+    df_testy = pd.DataFrame(y.reshape(y.shape[0], 1), columns=Y_col, index=indexs)
+    df = df.join(df_testx)
+    df = df.join(df_testy)
+    columns = df.columns.values
+    # columns
+    columns_dict_y = dict()
+    # peak pain
+    columns_picked_pain = pick_columns(columns=columns, word_starts_with='pain_erp_peak_Pain')
+    for key in columns_picked_pain:
+        # compute mean of gender
+        if is_column_contains(key,'_F_'):
+            new_col = key.replace('_F_','_avg_')
+            df[new_col] = df[key]/2 + df[key.replace('_F_','_M_')]/2
+            columns_dict_y[new_col] = [new_col]
+    # peak diff
+    columns_picked_diff = pick_columns(columns=columns, word_starts_with='pain_erp_peak_')
+    for key in columns_picked_diff:
+        # compute mean of gender
+        if is_column_contains(key,'_Pain_F_'):
+            new_col = key.replace('_Pain_F_','_diff_avg_')
+            df[new_col] = df[key]/2 + df[key.replace('_F_','_M_')]/2 - (df[key.replace('_Pain_F_','_Neutral_F_')]/2 + df[key.replace('_Pain_F_','_Neutral_M_')]/2)
+            columns_dict_y[new_col] = [new_col]
+
+    # amplitude diff
+    columns_picked_diff = pick_columns(columns=columns, word_starts_with='pain_erp_amplitude_norm')
+    for key in columns_picked_diff:
+        # compute mean of gender
+        if is_column_contains(key, '_Pain_F_'):
+            new_col = key.replace('_Pain_F_', '_diff_avg_')
+            df[new_col] = df[key] / 2 + df[key.replace('_F_', '_M_')] / 2 - (
+                    df[key.replace('_Pain_F_', '_Neutral_F_')] / 2 + df[key.replace('_Pain_F_', '_Neutral_M_')] / 2)
+            columns_dict_y[new_col] = [new_col]
+
+    # amplitude diff orig
+    columns_picked_diff = pick_columns(columns=columns, word_starts_with='pain_erp_amplitude_orig')
+    for key in columns_picked_diff:
+        # compute mean of gender
+        if is_column_contains(key, '_Pain_F_'):
+            new_col = key.replace('_Pain_F_', '_diff_avg_')
+            df[new_col] = df[key] / 2 + df[key.replace('_F_', '_M_')] / 2 - (
+                    df[key.replace('_Pain_F_', '_Neutral_F_')] / 2 + df[key.replace('_Pain_F_', '_Neutral_M_')] / 2)
+            columns_dict_y[new_col] = [new_col]
+
+    # test target (for testing whether the method is useful)
+    columns_dict_y['test_Y'] = pick_columns(columns=columns, word_starts_with='test_Y')
+    # features
+    columns_dict_x = dict()
+    # rest total
+    columns_dict_x['rest_norm'] = pick_columns(columns=columns, word_starts_with='rest_norm_')
+    columns_dict_x['rest_orig'] = pick_columns(columns=columns, word_starts_with='rest_orig_')
+    # rest alpha
+    columns_dict_x['rest_norm_alpha'] = pick_columns(columns=columns, word_starts_with='rest_norm_',word_ends_with='10.0')
+    columns_dict_x['rest_orig_alpha'] = pick_columns(columns=columns, word_starts_with='rest_orig_',word_ends_with='10.0')
+    # rest beta
+    columns_dict_x['rest_norm_beta'] = pick_columns(columns=columns, word_starts_with='rest_norm_', word_ends_with='17.0')
+    columns_dict_x['rest_orig_beta'] = pick_columns(columns=columns, word_starts_with='rest_orig_', word_ends_with='17.0')
+
     # testing features (for testing whether the method is useful)
     columns_dict_x['test_X'] = pick_columns(columns=columns, word_starts_with='test_X_')
 

@@ -6,6 +6,7 @@
 # @Desc   : some related methods
 
 import os
+import re
 import pandas as pd
 
 def get_file_list(file_path, start, end):
@@ -51,4 +52,14 @@ def pick_columns(columns, word_starts_with=None, word_ends_with=None):
     if word_starts_with is not None and word_ends_with is not None:
         return col_picked_both
 
+
+def is_column_contains(column_name, contain_word):
+    """
+    Test if column contains certain words
+    :param column_name: column_name[string]
+    :param contain_word: word contain
+    :return: bool value whether match
+    """
+    patten = r'(.*)' + contain_word + r'(.*)'
+    return bool(re.match(pattern=patten, string=column_name))
 
