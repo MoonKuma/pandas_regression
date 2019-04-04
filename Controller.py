@@ -8,7 +8,7 @@
 from pandas_method import compute_questionnaire,read_questionnaire
 import pandas as pd
 from sklearn_method.model_sets import *
-from pandas_method import read_result
+from pandas_method import read_result2
 
 from sklearn_method.test_hypothesis import test_all_hypothesis,test_all_models
 
@@ -19,8 +19,9 @@ from sklearn_method.test_hypothesis import test_all_hypothesis,test_all_models
 # train models
 # from sklearn_method.test_hypothesis import test_all_hypothesis,test_all_models
 # final_result_test, final_result_train = test_all_hypothesis()
-final_result_test, final_result_train = test_all_hypothesis(model_method=model_set_3)
+# final_result_test, final_result_train = test_all_hypothesis(model_method=model_set_3)
 # final_result_test, final_result_train = test_all_hypothesis(model_method=model_set_3)
 
 # report result
-read_result.report(result_set = 'model_set_2_result')
+read_result2.read_result2(result_path='data/data_formal/result_erp3')
+
